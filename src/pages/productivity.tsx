@@ -17,6 +17,7 @@ import instance from "@/instance";
 type IAssemblyLineWithRelationship = IAssemblyLine & {
     product: IProduct;
     manager: IUser;
+    note: string;
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -123,7 +124,7 @@ function PageProductivity({ assemblyLinesRaw }: { assemblyLinesRaw: string }) {
           }),
           columnHelper.accessor("note", {
             header: "Ghi chú",
-            cell: ({ cell }) => <p className="min-w-[200px] whitespace-break-spaces">{cell.getValue() && cell.getValue()?.length === 0 ? cell.getValue()?.join(", ") : ""}</p>,
+            cell: ({ cell }) => <p className="min-w-[200px] whitespace-break-spaces">{cell.getValue() && JSON.parse(cell.getValue() || "").length > 0 ? JSON.parse(cell.getValue())?.join(", ") : ""}</p>,
           }),
         ] as Array<ColumnDef<IAssemblyLineWithRelationship, unknown>>, [columnHelper]
       );

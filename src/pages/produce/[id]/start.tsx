@@ -6,12 +6,13 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import ProduceDialog from "@/components/produceDialog";
 import getFinishPercent from "../../../utils/getFinishPercent";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { Controller, set, useForm, useWatch } from "react-hook-form";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import instance from "@/instance";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
+import { AssemblyLineModel } from "@/database";
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
 
@@ -41,6 +42,21 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
             }
         }
       }
+
+    const assembly_line = await AssemblyLineModel.findOne({
+        where: {
+            id: Number(context.params?.id),
+        },
+    });
+
+    if(assembly_line?.getDataValue("status") === "OFF") {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            }
+        }
+    }
   
     return {
         props: {
@@ -87,11 +103,13 @@ function PageProduce() {
             setAssemblyLines(assemblyLinesData);
             if(assembly_line) {
                 setCurrentAssemblyLine(assemblyLinesData.find((assemblyLine: IAssemblyLineWithRelationship) => assemblyLine.id === Number(assembly_line)));
+                setValue('note', assemblyLinesData.find((assemblyLine: IAssemblyLineWithRelationship) => assemblyLine.id === Number(assembly_line)).note);
             }else{
                 setCurrentAssemblyLine(assemblyLinesData[0]);
+                setValue('note', assemblyLinesData[0].note);
             }
         })();
-    }, [id]);
+    }, [id, setValue]);
 
     const updateAssemblyLine = async (quantity: number) => {
         const data = {
@@ -127,13 +145,6 @@ function PageProduce() {
             router.push('/');
         }
     }
-
-    useEffect(() => {
-        console.log(currentAssemblyLine);
-        if(currentAssemblyLine) {
-            setValue('note', currentAssemblyLine.note);
-        }
-    }, [currentAssemblyLine, setValue]);
 
     return (
         <div className="shadow-lg p-8 border max-w-7xl mx-auto">

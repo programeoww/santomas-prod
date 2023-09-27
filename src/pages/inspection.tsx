@@ -129,24 +129,24 @@ function PageInspection() {
                     </div>
                     <div className="flex items-center rounded p-2 space-x-10">
                         <p className="text-xl leading-8 w-1/2">Số lượng hiện tại:</p>
-                        <p className="text-2xl text-center py-2 border border-neutral-300 rounded font-medium w-1/2">{currentAssemblyLine.finish}</p>
+                        <p className="text-2xl text-center py-2 border border-neutral-300 rounded font-medium w-1/2">{currentAssemblyLine.status === "OFF" ? 0 : currentAssemblyLine.finish}</p>
                     </div>
                     <div className="flex items-center rounded p-2 space-x-10">
                         <p className="text-xl leading-8 w-1/2">Tỷ lệ hoàn thành</p>
-                        <p className="text-2xl text-center py-2 border border-neutral-300 rounded font-medium w-1/2">{getFinishPercent(currentAssemblyLine.finish, currentAssemblyLine.product?.target)}%</p>
+                        <p className="text-2xl text-center py-2 border border-neutral-300 rounded font-medium w-1/2">{currentAssemblyLine.status === "OFF" ? 0 : getFinishPercent(currentAssemblyLine.finish, currentAssemblyLine.product?.target)}%</p>
                     </div>
                     <div className="flex items-center rounded p-2 space-x-10">
                         <p className="text-xl leading-8 w-1/2">Số lượng còn thiếu:</p>
-                        <p className="text-2xl text-center py-2 border border-neutral-300 rounded font-medium w-1/2">{Number(currentAssemblyLine.product?.target) - Number(currentAssemblyLine.finish) < 0 ? 0 : Number(currentAssemblyLine.product?.target) - Number(currentAssemblyLine.finish) || 0}</p>
+                        <p className="text-2xl text-center py-2 border border-neutral-300 rounded font-medium w-1/2">{currentAssemblyLine.status === "OFF" ? currentAssemblyLine.product?.target : Number(currentAssemblyLine.product?.target) - Number(currentAssemblyLine.finish) < 0 ? 0 : Number(currentAssemblyLine.product?.target) - Number(currentAssemblyLine.finish) || 0}</p>
                     </div>
                 </div>
                 <div className="p-5 w-1/4 mx-auto">
-                    <CircularProgressbar styles={{path:{stroke: `rgb(59, 130, 246)`}, text: {fill: 'rgb(59, 130, 246)'},}} className="duration-150" value={Number(currentAssemblyLine.finish) * 100 / Number(currentAssemblyLine.product?.target)} text={`${getFinishPercent(currentAssemblyLine.finish, currentAssemblyLine.product?.target)}%`} />
+                    <CircularProgressbar styles={{path:{stroke: `rgb(59, 130, 246)`}, text: {fill: 'rgb(59, 130, 246)'},}} className="duration-150" value={currentAssemblyLine.status === "OFF" ? 0 : Number(currentAssemblyLine.finish) * 100 / Number(currentAssemblyLine.product?.target)} text={`${currentAssemblyLine.status === "OFF" ? 0 : getFinishPercent(currentAssemblyLine.finish, currentAssemblyLine.product?.target)}%`} />
                 </div>
                 <div className="p-5 w-1/2 border-t-2">
                     <div className="flex items-center rounded p-2">
                         <p className="text-xl leading-8 w-1/2">Thời gian bắt đầu:</p>
-                        <p className="text-2xl text-center py-2 px-3 border border-neutral-300 rounded font-medium w-1/2">{moment(currentAssemblyLine.createdAt).format("HH:mm:ss DD-MM-YYYY")}</p>
+                        <p className="text-2xl text-center py-2 px-3 border border-neutral-300 rounded font-medium w-1/2">{moment(currentAssemblyLine.status === "OFF" ? undefined : currentAssemblyLine.createdAt).format("HH:mm:ss DD-MM-YYYY")}</p>
                     </div>
                 </div>
                 <div className="p-5 w-1/2 border-t-2">
