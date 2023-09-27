@@ -106,7 +106,7 @@ function PageProductivity({ assemblyLinesRaw }: { assemblyLinesRaw: string }) {
           {
             id: "percent",
             header: "Tiến độ",
-            cell: ({ row }) => row.original.status === "ON" ? getFinishPercent(row.original.finish, row.original.product.target) + "%" : '0%'
+            cell: ({ row }) => row.original.status === "OFF" ? getFinishPercent(row.original.finish, row.original.product.target) + "%" : '0%'
           },
           {
             id: "status",
@@ -123,7 +123,7 @@ function PageProductivity({ assemblyLinesRaw }: { assemblyLinesRaw: string }) {
           }),
           columnHelper.accessor("note", {
             header: "Ghi chú",
-            cell: ({ cell }) => <p className="min-w-[200px] whitespace-break-spaces">{cell.getValue()?.join(", ")}</p>,
+            cell: ({ cell }) => <p className="min-w-[200px] whitespace-break-spaces">{cell.getValue() && cell.getValue()?.length === 0 ? cell.getValue()?.join(", ") : ""}</p>,
           }),
         ] as Array<ColumnDef<IAssemblyLineWithRelationship, unknown>>, [columnHelper]
       );

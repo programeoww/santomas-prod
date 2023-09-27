@@ -115,7 +115,6 @@ function PageProduce() {
                 ...currentAssemblyLine,
                 endAt: moment().local().toISOString(true),
                 status: "OFF",
-                finish: 0,
             }
     
             const uploadData = { ...data }
@@ -130,6 +129,7 @@ function PageProduce() {
     }
 
     useEffect(() => {
+        console.log(currentAssemblyLine);
         if(currentAssemblyLine) {
             setValue('note', currentAssemblyLine.note);
         }
@@ -183,7 +183,7 @@ function PageProduce() {
                                     noOptionsMessage={() => "Không có ghi chú nào"}
                                     isMulti
                                     options={ JSON.parse(currentAssemblyLine?.product.note || '[]')?.map((item: string) => ({ value: item, label: item })) }
-                                    value={ value?.map((item) => ({ value: item, label: item })) }
+                                    value={ value?.map((item : string) => ({ value: item, label: item })) }
                                     onChange={(newValue) => onChange((newValue as { value: string, label: string }[]).map((item) => item.value))}
                                 />
                             )}

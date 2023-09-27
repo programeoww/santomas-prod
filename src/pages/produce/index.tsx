@@ -114,7 +114,6 @@ function PageProduce() {
                 ...currentAssemblyLine,
                 endAt: moment().local().toISOString(true),
                 status: "OFF",
-                finish: 0,
             }
     
             const uploadData = { ...data }

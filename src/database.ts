@@ -79,6 +79,7 @@ export const AssemblyLineModel = database.define('assembly_line', {
     endAt: DataTypes.DATE,
     managerId: DataTypes.INTEGER,
     productId: DataTypes.INTEGER,
+    note: DataTypes.STRING,
 });
 
 bcrypt.hash('admin', 10).then((hash) => {

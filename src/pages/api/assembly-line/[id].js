@@ -3,6 +3,8 @@ import { AssemblyLineModel, ProductModel } from "@/database";
 
 export default async function handler(req, res){
     if(req.method === 'PUT'){
+        req.body.note = JSON.stringify(req.body.note)
+
         const AssemblyLine = await AssemblyLineModel.update(req.body, {
             where: {
                 id: req.query.id
@@ -39,10 +41,15 @@ export default async function handler(req, res){
                 ]
             })
 
+            const data = {
+                ...AssemblyLine.dataValues,
+                note: JSON.parse(AssemblyLine.dataValues.note === "" ? "[]" : AssemblyLine.dataValues.note)
+            }
+
             res.status(200).json({
                 message: "Lấy dây chuyền thành công!",
                 success: true,
-                data: AssemblyLine
+                data: data
             })
         } catch (error) {
             res.status(200).json({

@@ -33,12 +33,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 ]
             })
 
+            const data = AssemblyLine.map((item) => {
+                const data = item.dataValues;
+                data.note = JSON.parse(data.note === "" ? "[]" : data.note)
+                return data;
+            });
+
             res.status(200).json({
                 message: "Lấy dây chuyền thành công!",
                 success: true,
-                data: AssemblyLine
+                data: data
             })
         } catch (error) {
+            console.log(error);
+            
             res.status(200).json({
                 message: "Lấy dây chuyền thất bại!",
                 success: false,

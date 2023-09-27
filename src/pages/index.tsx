@@ -28,6 +28,13 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
             permanent: false,
         }
     }
+  }else if(session.user.role === "worker") {
+    return {
+        redirect: {
+            destination: '/produce',
+            permanent: false,
+        }
+    }
   }
 
   const assemblyLines = await AssemblyLineModel.findAll({
@@ -60,7 +67,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 export default function Home({assemblyLinesRaw}: {assemblyLinesRaw: string}) {
   const assemblyLines = useMemo<IAssemblyLine[]>(() => JSON.parse(assemblyLinesRaw), [assemblyLinesRaw]);
 
-  console.log(assemblyLines);
+  // console.log(assemblyLines);
   
 
   return (
