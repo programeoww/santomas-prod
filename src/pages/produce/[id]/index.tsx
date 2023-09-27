@@ -179,10 +179,10 @@ function PageProductDetail({ productsRaw, workersRaw }: { productsRaw: string, w
                         </div>
                         {
                             currentAssemblyLine.status === "CANCELED" ? (
-                                <button onClick={() => router.push('/')} className="text-white w-full bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 text-center">Quay lại</button>
+                                <button type="button" onClick={() => router.push('/')} className="text-white w-full bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 text-center">Quay lại</button>
                             ) : (
                                 <div className="flex space-x-6">
-                                    <button onClick={() => router.push('/')} className="w-1/2 text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 text-center">Quay lại</button>
+                                    <button type="button" onClick={() => router.push('/')} className="w-1/2 text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 text-center">Quay lại</button>
                                     <button type="submit" className="w-1/2 text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 text-center">Bắt đầu</button>
                                 </div>
                             )

@@ -224,7 +224,7 @@ function PageProduce() {
                 </div>
                 <div className="p-5 w-full">
                     <div className="flex justify-center space-x-5">
-                        <button onClick={() => router.push('/')} className="bg-gray-500 w-1/4 hover:bg-gray-600 duration-150 text-white rounded px-4 py-2.5 text-xl font-medium">Quay lại</button>
+                        <button type="button" onClick={() => router.push('/')} className="bg-gray-500 w-1/4 hover:bg-gray-600 duration-150 text-white rounded px-4 py-2.5 text-xl font-medium">Quay lại</button>
                         <button onClick={endAssemblyLine} className="bg-red-500 w-1/4 hover:bg-red-600 duration-150 text-white rounded px-4 py-2.5 text-xl font-medium">Kết thúc dây chuyền</button>
                     </div>
                 </div>
